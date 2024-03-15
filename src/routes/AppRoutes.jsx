@@ -4,6 +4,7 @@ import publicRoutes from "./publicRoutes";
 import protectedRoutes from "./protectedRoutes";
 import PublicRoutes from "./Public";
 import Protected from "./Protected";
+import { Link } from "react-router-dom";
 
 const AppRouter = () => {
   return (
@@ -22,7 +23,16 @@ const AppRouter = () => {
         ))}
       </Route>
 
-      <Route path="*" element={<h1>404 not found</h1>} />
+      <Route
+        path="*"
+        element={
+          <>
+            <h1>404 not found</h1>
+            <br />
+            <Link to={"/Ecommerce/login"}>Ir al Login</Link>
+          </>
+        }
+      />
     </Routes>
   );
 };
