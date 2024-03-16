@@ -47,7 +47,7 @@ const Cart = () => {
       <button onClick={handleShopping}>Generar Ticket</button>
       {ticket && (
         <div>
-          <p>Felicidades Comprea realizada con exito!</p>
+          <p>Felicidades compra realizada con exito!</p>
           <section>
             <h3>Detalles de compra:</h3>
             <p>

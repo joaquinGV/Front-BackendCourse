@@ -1,5 +1,7 @@
 import axios from "axios";
-const API_ENDPOINT = "https://backendcourse.up.railway.app";
+
+const URL_ENDPOINT = import.meta.env.VITE_URL_ENDPOINT;
+const API_ENDPOINT = URL_ENDPOINT ? URL_ENDPOINT : "http://localhost:8080";
 
 // Define una función de manejo de errores personalizada
 const handleRequestError = (error) => {
@@ -34,16 +36,12 @@ async function loginUser(email, password) {
       email,
       password,
     };
-    const response = await axios.post(
-      `http://localhost:8080/api/users/login`,
-      body
-    );
+    const response = await axios.post(`${API_ENDPOINT}/api/users/login`, body);
 
     if (response.status === 200) {
       const token = response.data.data;
       window.localStorage.setItem("user", JSON.stringify(token));
       const user = JSON.parse(localStorage.getItem("user"));
-      console.log(user);
       if (user) return true;
       return false;
     } else {
@@ -67,7 +65,6 @@ async function registerUser(registerForm) {
       `${API_ENDPOINT}/api/users/register`,
       body
     );
-    console.log("llegado a este punto");
 
     if (response.status === 201) {
       return true;
@@ -156,7 +153,6 @@ const getProducts = async () => {
 
     const response = await axios.get(`${API_ENDPOINT}/api/products/`, config);
     const products = response.data.data;
-    console.log(products);
     return products;
   } catch (error) {
     handleRequestError(error);
@@ -186,7 +182,6 @@ const addProductToCart = async (pid, quantity) => {
       config
     );
     const cartData = response.data.data;
-    console.log(cartData);
     return cartData;
   } catch (error) {
     handleRequestError(error);
