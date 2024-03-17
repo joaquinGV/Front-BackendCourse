@@ -5,6 +5,8 @@ import protectedRoutes from "./protectedRoutes";
 import PublicRoutes from "./Public";
 import Protected from "./Protected";
 import { Link } from "react-router-dom";
+import StoreNavigation from "../components/StoreComponents/StoreNavigation";
+import NotFoundPage from "../components/NotFoundPage";
 
 const AppRouter = () => {
   return (
@@ -23,16 +25,8 @@ const AppRouter = () => {
         ))}
       </Route>
 
-      <Route
-        path="*"
-        element={
-          <>
-            <h1>404 not found</h1>
-            <br />
-            <Link to={"/Ecommerce/login"}>Ir al Login</Link>
-          </>
-        }
-      />
+      <Route path="/store" element={<StoreNavigation />} />
+      <Route path="*" element={<NotFoundPage />} />
     </Routes>
   );
 };
