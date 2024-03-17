@@ -146,6 +146,27 @@ const deleteUser = async (email) => {
   }
 };
 
+const deleteNoActive = async () => {
+  try {
+    const config = setConfig();
+    if (!config) return null;
+
+    const response = await axios.delete(
+      `${API_ENDPOINT}/api/users/no-active`,
+      config
+    );
+
+    if (response.status === 200) {
+      return true;
+    } else {
+      return false;
+    }
+  } catch (error) {
+    handleRequestError(error);
+    return false;
+  }
+};
+
 const getProducts = async () => {
   try {
     const config = setConfig();
@@ -235,4 +256,5 @@ export {
   addProductToCart,
   getCartData,
   purchaseCart,
+  deleteNoActive,
 };

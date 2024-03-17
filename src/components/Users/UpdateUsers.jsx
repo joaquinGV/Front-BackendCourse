@@ -1,12 +1,13 @@
 import { useEffect } from "react";
 import { useState } from "react";
-import { getAllUsers } from "../../services/api";
+import { deleteNoActive, getAllUsers } from "../../services/api";
 import User from "./User";
 import { useCallback } from "react";
 
 const UpdateUsers = () => {
   const [authorized, setAuthorized] = useState(false);
   const [users, setUsers] = useState([]);
+  const [usersDeleted, setUsersDeleted] = useState(false);
 
   const updateUserList = useCallback(async () => {
     const response = await getAllUsers();
@@ -20,6 +21,17 @@ const UpdateUsers = () => {
     updateUserList();
   }, [updateUserList]);
 
+  const handleDelete = async () => {
+    const response = await deleteNoActive();
+    if (response) {
+      setUsersDeleted(true);
+      setTimeout(() => {
+        setUsersDeleted(false);
+      }, 5000);
+      await updateUserList();
+    }
+  };
+
   return (
     <>
       {authorized ? (
@@ -29,6 +41,8 @@ const UpdateUsers = () => {
               <User key={user.email} user={user} updateUsers={updateUserList} />
             );
           })}
+          <button onClick={handleDelete}>Eliminar Inactivos</button>
+          {usersDeleted ? <p>Usuarios inactivos eliminados</p> : ""}
         </div>
       ) : (
         <div>No tienes acceso para ver la información.</div>
